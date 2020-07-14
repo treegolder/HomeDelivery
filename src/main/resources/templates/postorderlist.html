@@ -1,0 +1,174 @@
+<!--
+Author: xmoban.cn
+author URL: http://xmoban.cn
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Courier Store A Corporate Business Bootstrap Responsive Website Template | Process :: xmoban.cn</title>
+<!-- for-mobile-apps -->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Courier Store Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+		function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- css files -->
+<link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all" />
+<link href="http://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all" />
+<link th:href="@{/css3/colorfulTab.min.css}" rel="stylesheet" type="text/css" media="all" />
+<link th:href="@{/css3/style.css}" rel="stylesheet" type="text/css" media="all" />
+<!-- /css files -->
+
+<!-- js files -->
+
+<!-- /js files -->
+</head>
+<body>
+<!-- navigation -->
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" th:href="@{#}"><h1><span class="fa fa-diamond" aria-hidden="true"></span>Courier Store</h1></a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="index.html">Home</a></li>
+				<li><a href="about.html">About</a></li>
+				<li><a href="service.html">Services</a></li>
+				<li><a href="work.html">Our Work</a></li>
+				<li class="active"><a href="process.html">Process</a></li>
+				<li><a href="typo.html">Typography</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-truck" aria-hidden="true"></i> Track Order<b class="caret"></b></a>
+					<div class="dropdown-menu">
+						<div class="track-w3ls">
+							<h3>Enter Your Tracking Code</h3>
+							<form th:action="@{/postorder/status}" method="post">
+								<input type="text" name="trackcode" placeholder="Enter Tracking Code" required />
+								<button type="submit" class="btn btn-primary">Track</button>
+							</form>
+							<p class="track-p1">Contact Us :</p>
+							<p class="track-p2"><a href="mailto:mail@example.com">mail@example.com</a></p>
+						</div>
+					</div>
+				</li>
+				<li class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-lock" aria-hidden="true"></i> Login<b class="caret"></b></a>
+					<div class="dropdown-menu">
+						<div class="login-w3ls">
+							<h3>Login To Your Account</h3>
+							<form action="#" method="post">
+								<input type="text" name="email1" placeholder="Username or email" required />
+								<input type="password" name='password' placeholder="Password" required> 
+								<input type="submit" name="submit" value="Continue">
+							</form>
+						</div>
+					</div>
+				</li>
+			</ul>
+        </div><!--/.nav-collapse -->
+    </div>
+</nav>
+<!-- navigation -->
+<!-- banner section -->
+<section class="inner-w3ls">
+	<div class="container">
+		<h2 class="text-center w3layouts w3 w3l agileits agileinfo">Track Your Product</h2>
+		<p class="text-center w3layouts w3 w3l agileits agileinfo">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.</p>
+	</div>
+</section>
+<!-- /tracking section -->
+<!-- transit section -->
+<section class="transit-w3ls">
+	<div class="container">
+		<i class="fa fa-trophy" aria-hidden="true"></i>
+		<h3 class="text-center">Transit Location</h3>
+		<p class="text-center">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+	</div>
+	<div class="container">
+		<div class="colorful-tab-wrapper" id="colorful-flatline">
+			<ul class="colorful-tab-menu">
+				<li class="colorful-tab-menu-item active" tab-color="#445370"><a href="#fl-0">PostOrder</a></li>
+			</ul>
+			<div class="colorful-tab-container">  
+				<div class="colorful-tab-content active" id="fl-0"> 
+					<div class="skill-info">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Numbering</th>
+										<th>Dispatched</th>
+										<th>In-Transit</th>
+										<th>Delivered</th>
+										<th>CreationTime</th>
+									</tr>
+								</thead>
+								<tbody>
+								<tr th:each="postorder : ${postOrders}" >
+									<td>
+										<h4 th:text="${postorder.getName()}"></h4>
+										<div class="clearfix"></div>
+									</td>
+									<td th:text="${postorder.getNumber()}"></td>
+									<td></td>
+									<td>3</td>
+									<td>4</td>
+									<td>5</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+  <!-- Flatline -->
+	</div>
+</section>
+<!-- /transit section -->
+<!-- /footer section -->
+<a href="#0" class="cd-top">Top</a>
+<!-- js files -->
+<script th:src="@{/js3/jquery.min.js}"></script>
+<script th:src="@{/js3/bootstrap.min.js}"></script>
+<script th:src="@{/js3/SmoothScroll.min.js}"></script>
+<script th:src="@{/js3/index.js}"></script>
+<script th:src="@{/js3/top.js}"></script>
+<script type="text/javascript" th:src="@{/js3/colorfulTab.min.js}"></script>
+  <script type="text/javascript">
+    $(document).ready(function(){
+        
+        $("#colorful").colorfulTab();    
+        
+        $("#colorful-elliptic").colorfulTab({
+            theme: "elliptic"
+        }); 
+       
+       $("#colorful-flatline").colorfulTab({
+            theme: "flatline"
+        });    
+        
+        $("#colorful-background-image").colorfulTab({
+            theme: "flatline",
+            backgroundImage: "true",
+            overlayColor: "#2d3305",
+            overlayOpacity: "0.8"
+        });   
+    
+    });
+  </script>
+<!-- /js files -->
+</body>
+</html>

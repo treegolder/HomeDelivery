@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:color="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<!--<meta http-equiv="content-type" content="text/html;charset=utf-8">-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>sing in</title>
+
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}">
+
+<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/vector.js}"></script>
+
+</head>
+<body>
+
+<div id="container">
+	<div id="output">
+		<div class="containerT">
+			<h1>用户登录</h1>
+			<h2 ><font color="red"><p th:text="${msg}" ></p></font></h2>
+			<form class="form" id="entry_form" method="post" th:action="@{/user/toLogin}">
+				<input required type="text" name="number" th:placeholder="用户名" id="entry_name">
+				<input required type="password" name="password" th:placeholder="密码" id="entry_password">
+				<button type="submit" id="entry_btn" >登录</button>
+				<div id="prompt" class="prompt"></div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" th:inline="javascript">
+    $(function(){
+        Victor("container", "output");   //登录背景函数
+        $("#entry_name").focus();
+        $(document).keydown(function(event){
+            if(event.keyCode==13){
+                $("#entry_btn").click();
+            }
+        });
+    });
+
+</script>
+<div style="text-align:center;">
+
+</div>
+</body>
+</html>
