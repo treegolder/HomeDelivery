@@ -46,4 +46,8 @@ public class PostOrderService {
   public Commodity findCommodityById(int id) {
     return cr.findById(id).get();
   }
+  public void dingshi() {
+    PostOrder postOrder = pr.findFirstByOrderByIdDesc();
+
+  }
 }
