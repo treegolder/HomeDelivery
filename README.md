@@ -1,26 +1,22 @@
-# Getting Started
+###电商宅配送会员系统
+#### Springboot + Spring-data-JPA + thymeleaf + MySQL 
+#### 系统分为管理员、会员两种角色，管理员添加卡卷，会员使用卡卷购买配送服务，自动配送
+#### 系统包含套餐卡（TimesCard）与充值卡（RechargeCard）两种卡卷，所有卡卷包含未激活（UNACTIVATION）、激活（ACTIVATION）、已失效(DELETED)三种状态
 
-### Reference Documentation
-For further reference, please consider the following sections:
-
-* [Official Apache Maven documentation](https://maven.apache.org/guides/index.html)
-* [Spring Boot Maven Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/maven-plugin/reference/html/)
-* [Create an OCI image](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/maven-plugin/reference/html/#build-image)
-* [Spring Boot DevTools](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#using-boot-devtools)
-* [Spring Web](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#boot-features-developing-web-applications)
-* [Spring Security](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#boot-features-security)
-* [Spring Data JPA](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#boot-features-jpa-and-spring-data)
-* [Validation](https://docs.spring.io/spring-boot/docs/2.3.1.RELEASE/reference/htmlsingle/#boot-features-validation)
-
-### Guides
-The following guides illustrate how to use some features concretely:
-
-* [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
-* [Serving Web Content with Spring MVC](https://spring.io/guides/gs/serving-web-content/)
-* [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
-* [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
-* [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-* [Authenticating a User with LDAP](https://spring.io/guides/gs/authenticating-ldap/)
-* [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
-* [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-mysql/)
-
+#### 主要功能
++ 鉴别身份、加密的注册、登录与登出
+##### 管理员：
++ 可对会员进行查看、删除
++ 对所有卡卷的増、删、查看
++ 增加商品（配送服务）
+#### 会员：
++ 查看所有商品、使用卡卷进行购买商品（配送服务）
++ 下订单后，如果使用的套餐卡（TimesCard）则会按配送计划，配送至卡片剩余次数为0
++ 下订单后，如果使用的是充值卡（RechargeCard）则进行正常的购买行为，无自动配送服务
++ 查看所有订单
++ 根据订单号，查询订单，模拟追踪物流
++ 根据卡卷不同状态进行分类，会员可以在管理员处购买无持有者的卡卷（UnHolderCards），购买后，卡卷为为激活状态（UNACTIVATION）
++ 激活卡卷
++ 当卡卷可用次数/余额用光后，将自动变为已失效（DELETED）状态，不可再次使用
++ 余额卡（RechargeCard）余额不足购买商品时，可充值（下个版本上线）
++ 现版本仅支持 固定的 【配送计划】，将在下个版本实现可交互化
