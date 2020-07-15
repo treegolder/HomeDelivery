@@ -57,42 +57,30 @@
                   <button class="rd-navbar-toggle" data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
                   <!-- RD Navbar Brand-->
                   <div class="rd-navbar-brand">
-                    <!--Brand--><a th:class="brand" th:href="@{grid-shop.html}"><img class="brand-logo-dark" th:src="@{/images2/logo-default-234x82.png}" alt="" width="117" height="41"/><img th:class="brand-logo-light" th:src="@{/images2/logo-inverse-234x82.png}" alt="" width="117" height="41"/></a>
+                    <!--Brand-->
+                    <a th:class="brand" th:href="@{grid-shop.html}"><img class="brand-logo-dark" th:src="@{/images2/logo-default-234x82.png}" alt="" width="117" height="41"/><img th:class="brand-logo-light" th:src="@{/images2/logo-inverse-234x82.png}" alt="" width="117" height="41"/></a>
                   </div>
+                  <p th:text="${cardmsg}" style="color: red"></p>
                 </div>
                 <div class="rd-navbar-aside-element">
                   <!-- RD Navbar Search-->
                   <div class="rd-navbar-search rd-navbar-search-2">
-<!--                    <button class="rd-navbar-search-toggle rd-navbar-fixed-element-3" data-rd-navbar-toggle=".rd-navbar-search"><span></span></button>-->
-                 <!--   <form class="rd-search" th:action="@{search-results.html}" data-search-live="rd-search-results-live" method="GET">
-                      <div class="form-wrap">
-                        <input class="rd-navbar-search-form-input form-input" id="rd-navbar-search-form-input" type="text" name="s" autocomplete="off"/>
-                        <label class="form-label" for="rd-navbar-search-form-input">Search...</label>
-                        <div class="rd-search-results-live" id="rd-search-results-live"></div>
-                        <button class="rd-search-form-submit fl-bigmug-line-search74" type="submit"></button>
-                      </div>
-                    </form>-->
+
                   </div>
                   <!-- RD Navbar Basket-->
                   <div class="rd-navbar-basket-wrap">
-                   <!-- <button class="rd-navbar-basket fl-bigmug-line-shopping202" data-rd-navbar-toggle=".cart-inline"><span>2</span></button>-->
                     <div class="cart-inline">
                       <div class="cart-inline-header">
-                        <!--<h5 class="cart-inline-title">In cart:<span> 2</span> Products</h5>
-                        <h6 class="cart-inline-title">Total price:<span> $42</span></h6>-->
                       </div>
                       <div class="cart-inline-body">
                         <div class="cart-inline-item">
                           <div class="unit unit-spacing-sm align-items-center">
                             <div class="unit-left"><a class="cart-inline-figure" th:href="@{single-product.html}"><img th:src="@{/images2/product-mini-1-106x104.jpg}" alt="" width="106" height="104"/></a></div>
                             <div class="unit-body">
-<!--                              <h6 class="cart-inline-name"><a th:href="@{single-product.html}">Forest Berry</a></h6>-->
                               <div>
                                 <div class="group-xs group-middle">
                                   <div class="table-cart-stepper">
-<!--                                    <input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>-->
                                   </div>
-<!--                                  <h6 class="cart-inline-title">$18.00</h6>-->
                                 </div>
                               </div>
                             </div>
@@ -102,13 +90,10 @@
                           <div class="unit unit-spacing-sm align-items-center">
                             <div class="unit-left"><a class="cart-inline-figure" th:href="@{single-product.html}"><img th:src="@{/images2/product-mini-2-106x104.jpg}" alt="" width="106" height="104"/></a></div>
                             <div class="unit-body">
-<!--                              <h6 class="cart-inline-name"><a th:href="@{single-product.html}">Carrots</a></h6>-->
                               <div>
                                 <div class="group-xs group-middle">
                                   <div class="table-cart-stepper">
-<!--                                    <input class="form-input" type="number" data-zeros="true" value="1" min="1" max="1000"/>-->
                                   </div>
-<!--                                  <h6 class="cart-inline-title">$24.00</h6>-->
                                 </div>
                               </div>
                             </div>
@@ -121,11 +106,7 @@
                     </div>
                   </div>
                   <div class="rd-navbar-fixed-element-2 select-inline">
-                   <!-- <select data-dropdown-class="select-inline-dropdown">
-                      <option value="en">en</option>
-                      <option value="fr">fr</option>
-                      <option value="es">es</option>
-                    </select>-->
+                    <a th:href="@{/user/toLogout}">Logout</a>
                   </div>
                 </div>
               </div>
@@ -134,7 +115,7 @@
               <div class="rd-navbar-main">
                 <div class="rd-navbar-nav-wrap">
                   <ul class="rd-navbar-nav">
-                    <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{grid-shop.html}">Home</a>
+                    <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{/user/toUserIndex1}">Home</a>
                     </li>
                     <li class="rd-nav-item"><a class="rd-nav-link" th:ref="@{#}">Pages</a>
                       <ul class="rd-menu rd-navbar-dropdown">
@@ -156,23 +137,17 @@
                         </li>
                       </ul>
                     </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{blog-list.html}">Blog</a>
-                      <ul class="rd-menu rd-navbar-dropdown">
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" th:href="@{blog-post.html}">Blog Post</a>
-                        </li>
-                      </ul>
-                    </li>
                     <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{/postorder/orderlist}">PostOrder</a>
                     </li>
-                    <li class="rd-nav-item active"><a class="rd-nav-link" th:href="@{grid-shop.html}">Shop</a>
+                    <li class="rd-nav-item active"><a class="rd-nav-link" th:href="@{/user/toUserIndex1}">SHOP</a>
                       <ul class="rd-menu rd-navbar-dropdown">
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" th:href="@{grid-shop.html}">Grid Shop</a>
+                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" th:href="@{/user/toUserIndex1}">Grid Shop</a>
                         </li>
-                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" th:href="@{single-product.html}">Single Product</a>
+                        <li class="rd-dropdown-item"><a class="rd-dropdown-link" th:href="@{/user/toUserIndex1}">Single Product</a>
                         </li>
                       </ul>
                     </li>
-                    <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{contact-us.html}">Contact Us</a>
+                    <li class="rd-nav-item"><a class="rd-nav-link" th:href="@{/user/cardmanage}">CARDMANAGE</a>
                     </li>
                   </ul>
                 </div>
@@ -251,14 +226,6 @@
                       </label><span class="list-shop-filter-number">(8)</span>
                     </li>
                   </ul>
-                  <!-- RD Search Form-->
-                  <!--<form class="rd-search form-search"  method="GET">
-                    <div class="form-wrap">
-                      <input class="form-input" id="search-form" type="text" name="s" autocomplete="off">
-                      <label class="form-label" for="search-form">Search in shop...</label>
-                      <button class="button-search fl-bigmug-line-search74" type="submit"></button>
-                    </div>
-                  </form>-->
                 </div>
                 <div class="aside-item col-sm-6 col-lg-12">
                   <h6 class="aside-title">Popular products</h6>
@@ -309,11 +276,6 @@
                 <div>
                   <div class="group-sm group-middle">
                     <div class="product-top-panel-sorting">
-                     <!-- <select>
-                        <option value="1">Sort by newness</option>
-                        <option value="2">Sort by popularity</option>
-                        <option value="3">Sort by alphabet</option>
-                      </select>-->
                     </div>
 <!--                    <div class="product-view-toggle"><a class="mdi mdi-apps product-view-link product-view-grid active" th:href="@{grid-shop.html}"></a><a class="mdi mdi-format-list-bulleted product-view-link product-view-list" th:href="@{#}"></a></div>-->
                   </div>
@@ -361,6 +323,7 @@
                 >
                   <form method="post" th:action="@{/user/toBuy}">
                     <!-- Product-->
+                    <input th:value="${commodity.getId()}" name="id" hidden>
                     <input th:value="${commodity.getName()}" name="name" hidden>
                     <input th:value="${commodity.getPrice()}" name="price" hidden>
                     <article class="product">

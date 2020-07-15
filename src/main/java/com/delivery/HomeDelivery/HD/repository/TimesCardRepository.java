@@ -5,6 +5,8 @@ import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface TimesCardRepository extends BaseRepository<TimesCard,Integer>{
     @Query("select t from TimesCard t where t.id=:id and t.coupon.status='ACTIVATION'")
@@ -15,4 +17,11 @@ public interface TimesCardRepository extends BaseRepository<TimesCard,Integer>{
 
     @Query("select t from TimesCard t where t.id=:id and t.coupon.status='DELETED'")
     TimesCard findDelTimesCardById(int id);
+
+    @Query("from TimesCard t where t.coupon.status='UNACTIVATION'")
+    List<TimesCard> findUnAcCards();
+    @Query("from TimesCard t where t.coupon.status='ACTIVATION'")
+    List<TimesCard> findAcCards();
+    @Query("from TimesCard t where t.coupon.status='DELETED'")
+    List<TimesCard> findDelCards();
 }

@@ -29,5 +29,7 @@ public class UserService {
     public List<Commodity> commodities() {
         return cr.findAll();
     }
-
+    public List<User> findAll() {
+        return ur.findAll();
+    }
 }

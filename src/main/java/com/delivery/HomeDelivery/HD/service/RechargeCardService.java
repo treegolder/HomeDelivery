@@ -7,6 +7,8 @@ import com.delivery.HomeDelivery.HD.repository.RechargeCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class RechargeCardService {
     @Autowired
@@ -41,5 +43,14 @@ public class RechargeCardService {
     public void logicDelete(RechargeCard rechargeCard) {
         if (rechargeCard.getBalance() == 0)
             rechargeCard.getCoupon().setStatus(Coupon.Status.DELETED);
+    }
+    public List<RechargeCard> findAll() {
+        return rr.findAll();
+    }
+    public List<RechargeCard> findUnAcCards() {
+        return rr.findUnAcCards();
+    }
+    public List<RechargeCard> findAcCards() {
+        return rr.findAcCards();
     }
 }

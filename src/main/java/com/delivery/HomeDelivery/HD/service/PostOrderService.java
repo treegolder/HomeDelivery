@@ -1,6 +1,8 @@
 package com.delivery.HomeDelivery.HD.service;
 
+import com.delivery.HomeDelivery.HD.entity.Commodity;
 import com.delivery.HomeDelivery.HD.entity.PostOrder;
+import com.delivery.HomeDelivery.HD.repository.CommodityRepository;
 import com.delivery.HomeDelivery.HD.repository.PostOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -11,7 +13,10 @@ import java.util.Queue;
 
 @Service
 public class PostOrderService {
-  @Autowired private PostOrderRepository pr;
+  @Autowired
+  private PostOrderRepository pr;
+  @Autowired
+  private CommodityRepository cr;
 
   public PostOrder savePostorder(PostOrder postOrder) {
     return pr.save(postOrder);
@@ -37,5 +42,8 @@ public class PostOrderService {
 
   public PostOrder findPostOrderByNumber(String number) {
     return pr.findPostOrderByNumber(number);
+  }
+  public Commodity findCommodityById(int id) {
+    return cr.findById(id).get();
   }
 }

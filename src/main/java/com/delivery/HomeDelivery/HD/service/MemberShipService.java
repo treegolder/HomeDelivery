@@ -33,5 +33,8 @@ public class MemberShipService {
     public List<Coupon> findAcCouponsByMemberId(int id) {
         return mr.findAcCoupon(id);
     }
+    public List<MemberShip> findAll() {
+        return mr.findAll();
+    }
 
 }

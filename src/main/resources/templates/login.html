@@ -18,13 +18,16 @@
 	<div id="output">
 		<div class="containerT">
 			<h1>用户登录</h1>
+			<p th:text="${sucmsg}" style="color: red"></p>
 			<h2 ><font color="red"><p th:text="${msg}" ></p></font></h2>
 			<form class="form" id="entry_form" method="post" th:action="@{/user/toLogin}">
 				<input required type="text" name="number" th:placeholder="用户名" id="entry_name">
 				<input required type="password" name="password" th:placeholder="密码" id="entry_password">
 				<button type="submit" id="entry_btn" >登录</button>
-				<div id="prompt" class="prompt"></div>
+
+				<div id="prompt" class="prompt"><a class="form" th:href="@{/user/register}">没有账号？现在注册</a></div>
 			</form>
+
 		</div>
 	</div>
 </div>

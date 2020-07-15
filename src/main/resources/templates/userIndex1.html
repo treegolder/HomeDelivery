@@ -39,19 +39,19 @@
 						<span class="icon-bar"></span>
 					</button>
 					<div class="w3_navigation_pos">
-						<h1><a th:href="@{userIndex1.html}">首页</a></h1>
+<!--						<h1><a th:href="@{userIndex1.html}">首页</a></h1>-->
 					</div>
 				</div>
 				<!-- Collect the nav links, forms, and other content for toggling -->
 				<div class="collapse navbar-collapse navbar-right" id="bs-example-navbar-collapse-1">
 					<nav class="menu menu--miranda">
 						<ul class="nav navbar-nav menu__list">
-							<li class="menu__item menu__item--current"><a th:href="@{userIndex1.html}" class="menu__link">Home</a></li>
-							<li class="menu__item"><a th:href="@{#about}" class="scroll menu__link">about</a></li>
+							<li class="menu__item menu__item--current"><a th:href="@{/user/toUserIndex1}" class="menu__link">Home</a></li>
+							<!--<li class="menu__item"><a th:href="@{#about}" class="scroll menu__link">about</a></li>
 							<li class="menu__item"><a th:href="@{#features}" class="scroll menu__link">features</a></li>
 							<li class="menu__item"><a th:href="@{#gallery}" class="scroll menu__link">gallery</a></li>
 							<li class="menu__item"><a th:href="@{#services}" class="scroll menu__link">services</a></li>
-							<li class="menu__item"><a th:href="@{#contact}" class="scroll menu__link">contact</a></li>
+							<li class="menu__item"><a th:href="@{#contact}" class="scroll menu__link">contact</a></li>-->
 						</ul>
 					</nav>
 				</div>
@@ -81,6 +81,7 @@
 							<option>选择国家</option>
 							<option th:value="中国" name="country">中国</option>
 						</select>
+						<input th:value="${commodityid}" name="id" hidden>
 						<input type="text"  name="province" placeholder="省份" required="" />
 					</div>
 					<div class="right-agileits">

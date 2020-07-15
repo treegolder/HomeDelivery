@@ -88,6 +88,22 @@ public class InitComponent implements InitializingBean {
             rechargeCard.setBalance(850);
             rs.saveRechargeCard(rechargeCard);
         }
+        int number5 = 1005;
+        Coupon coupon5 = cr.findCouponByNumber(number5);
+        if(coupon5 == null) {
+            Coupon c = new Coupon();
+            c.setAdmin(as.findAdminById(1));
+            c.setCouponName("余额卡");
+            c.setMemberShip(ms.findMemberShipById(2));
+            c.setSpecies(Coupon.Species.RechargeCard);
+            c.setStatus(Coupon.Status.UNACTIVATION);
+            c.setNumber(number5);
+            RechargeCard rechargeCard = new RechargeCard();
+            rechargeCard.setCoupon(c);
+            rechargeCard.setTotalAmount(1000);
+            rechargeCard.setBalance(1000);
+            rs.saveRechargeCard(rechargeCard);
+        }
 
 
     }

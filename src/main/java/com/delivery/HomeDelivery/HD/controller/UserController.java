@@ -7,11 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Time;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -30,15 +32,18 @@ public class UserController {
     private RechargeCardService rs;
     @Autowired
     private SnowFlake snowFlake;
+    @Autowired
+    private UserService us;
 
 
     @PostMapping("/toBuy")
-    public String toBuy(String name,Double price,HttpSession session, Model m) {
+    public String toBuy(int id ,String name,Double price,HttpSession session, Model m) {
         Integer userid = (int)session.getAttribute("userid");
         List<Coupon> coupons =ms.findAcCouponsByMemberId(userid);
         m.addAttribute("cardsList",coupons);
         m.addAttribute("name", name);
         m.addAttribute("price",price);
+        session.setAttribute("commodityid", id);
         session.setAttribute("price", price);
         session.setAttribute("name", name);
         return "userIndex1";
@@ -46,7 +51,7 @@ public class UserController {
 
     @PostMapping("/pay")
     public String pay (HttpSession session, String name, String tel,  String country, String province, String city,
-                          Integer cardNumber, String address,Model m) {
+                          Integer cardNumber, String address,Model m,int id) {
         Integer userid = (int)session.getAttribute("userid");
         MemberShip memberShip = ms.findMemberShipById(userid);
         PostOrder postOrder = new PostOrder();
@@ -61,6 +66,7 @@ public class UserController {
         postOrder.setNumber(String.valueOf(snowFlake.getNextId()));
         postOrder.setStatus(PostOrder.Status.PROCESSING);
         postOrder.setMemberShip(memberShip);
+        Commodity commodity = ps.findCommodityById(id);
         ps.savePostorder(postOrder);
         List<Coupon> coupons = memberShip.getCoupons();
         if (String.valueOf(coupon.getSpecies()).equals("RechargeCard")) {
@@ -110,5 +116,56 @@ public class UserController {
             }
         }
         return "redirect:/user/toUserIndex1";
+    }
+    @GetMapping("/cardmanage")
+    public String cardManage(HttpSession session,Model m) {
+        int userid = (int) session.getAttribute("userid");
+        User user = us.findUserById(userid);
+        MemberShip memberShip = ms.findMemberShipById(userid);
+        m.addAttribute("username",user.getName());
+        List<Coupon> coupons = memberShip.getCoupons();
+        List<TimesCard> timesCardList = new ArrayList<>();
+        List<RechargeCard> rechargeCardList = new ArrayList<>();
+        List<TimesCard> tsUnAcCards = new ArrayList<>();
+        List<RechargeCard> rsUnAcCards = new ArrayList<>();
+        for(Coupon c : coupons) {
+            if (c.getSpecies().equals(Coupon.Species.TimesCard)
+               && c.getStatus().equals(Coupon.Status.ACTIVATION)) {
+                TimesCard acTimesCardById = ts.findAcTimesCardById(c.getId());
+                timesCardList.add(acTimesCardById);
+            }
+            if (c.getSpecies().equals(Coupon.Species.RechargeCard)
+                && c.getStatus().equals(Coupon.Status.ACTIVATION)) {
+                RechargeCard acRechargeCardById = rs.findAcRechargeCardById(c.getId());
+                rechargeCardList.add(acRechargeCardById);
+            }
+            if (c.getSpecies().equals(Coupon.Species.TimesCard)
+                && c.getStatus().equals(Coupon.Status.UNACTIVATION)) {
+                TimesCard unAcTimesCardById = ts.findUnAcTimesCardById(c.getId());
+                tsUnAcCards.add(unAcTimesCardById);
+            }
+            if (c.getSpecies().equals(Coupon.Species.RechargeCard)
+              && c.getStatus().equals(Coupon.Status.UNACTIVATION)) {
+                RechargeCard unAcRechargeCardById = rs.findUnAcRechargeCardById(c.getId());
+                rsUnAcCards.add(unAcRechargeCardById);
+            }
+        }
+
+
+        m.addAttribute("timesCardList",timesCardList);
+        m.addAttribute("rechargeCardList",rechargeCardList);
+        m.addAttribute("tsUnAcCards",tsUnAcCards);
+        m.addAttribute("rsUnAcCards",rsUnAcCards);
+
+        return "cardmanage";
+    }
+
+    @GetMapping("/active")
+    public String toActiveCard(@RequestParam("number") int number,Model m) {
+        Coupon coupon = cs.findCouponByNumber(number);
+        coupon.setStatus(Coupon.Status.ACTIVATION);
+        m.addAttribute("cardmsg","激活成功");
+        return "redirect:/user/toUserIndex1";
+
     }
 }

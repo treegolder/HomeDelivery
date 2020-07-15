@@ -6,6 +6,8 @@ import com.delivery.HomeDelivery.HD.repository.TimesCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class TimesCardService {
     @Autowired
@@ -40,6 +42,15 @@ public class TimesCardService {
     public void logicDelete(TimesCard timesCard) {
         if (timesCard.getRemainingTimes() == 0)
             timesCard.getCoupon().setStatus(Coupon.Status.DELETED);
+    }
+    public List<TimesCard> findAll() {
+        return tr.findAll();
+    }
+    public List<TimesCard> findUnAcCards() {
+        return tr.findUnAcCards();
+    }
+    public List<TimesCard> findAcCards() {
+        return tr.findAcCards();
     }
 
 }
