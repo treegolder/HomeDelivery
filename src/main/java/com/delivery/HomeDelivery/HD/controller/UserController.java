@@ -1,8 +1,10 @@
 package com.delivery.HomeDelivery.HD.controller;
 
 import com.delivery.HomeDelivery.HD.component.SnowFlake;
+import com.delivery.HomeDelivery.HD.component.Util;
 import com.delivery.HomeDelivery.HD.entity.*;
 import com.delivery.HomeDelivery.HD.service.*;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +36,10 @@ public class UserController {
     private SnowFlake snowFlake;
     @Autowired
     private UserService us;
+    @Autowired
+    private Util util;
+    @Autowired
+    private AdminService as;
 
 
     @PostMapping("/toBuy")
@@ -107,6 +113,7 @@ public class UserController {
                         memberCoupon.setRemainingTimes(memberCoupon.getRemainingTimes() - 1);
                         ts.updateTimesCard(memberCoupon);
                         m.addAttribute("tmsg1", "购买成功");
+                        util.setI(1);
                         if (memberCoupon.getRemainingTimes() == 0) {
                             //逻辑删除
                             ts.logicDelete(memberCoupon);
@@ -119,6 +126,7 @@ public class UserController {
             }
         }
         ps.savePostorder(postOrder);
+
         return "redirect:/user/toUserIndex1";
     }
     @GetMapping("/cardmanage")
@@ -132,6 +140,7 @@ public class UserController {
         List<RechargeCard> rechargeCardList = new ArrayList<>();
         List<TimesCard> tsUnAcCards = new ArrayList<>();
         List<RechargeCard> rsUnAcCards = new ArrayList<>();
+
         for(Coupon c : coupons) {
             if (c.getSpecies().equals(Coupon.Species.TimesCard)
                && c.getStatus().equals(Coupon.Status.ACTIVATION)) {
@@ -153,13 +162,28 @@ public class UserController {
                 RechargeCard unAcRechargeCardById = rs.findUnAcRechargeCardById(c.getId());
                 rsUnAcCards.add(unAcRechargeCardById);
             }
+
         }
+        List<TimesCard> UnHolderTCards = new ArrayList<>();
+        List<RechargeCard> UnHolderRCards = new ArrayList<>();
+        List<Coupon> unHolderCards = cs.findUnHolderCards();
+        for (Coupon c : unHolderCards) {
+            if (c.getSpecies().equals(Coupon.Species.TimesCard)) {
+                TimesCard timesCardById = ts.findTimesCardById(c.getId());
+                UnHolderTCards.add(timesCardById);
+            }
+            if (c.getSpecies().equals(Coupon.Species.RechargeCard)) {
+                RechargeCard rechargeCardById = rs.findRechargeCardById(c.getId());
+                UnHolderRCards.add(rechargeCardById);
+            }
 
-
+        }
         m.addAttribute("timesCardList",timesCardList);
         m.addAttribute("rechargeCardList",rechargeCardList);
         m.addAttribute("tsUnAcCards",tsUnAcCards);
         m.addAttribute("rsUnAcCards",rsUnAcCards);
+        m.addAttribute("UnHolderTCards",UnHolderTCards);
+        m.addAttribute("UnHolderRCards",UnHolderRCards);
 
         return "cardmanage";
     }
@@ -169,7 +193,53 @@ public class UserController {
         Coupon coupon = cs.findCouponByNumber(number);
         coupon.setStatus(Coupon.Status.ACTIVATION);
         m.addAttribute("cardmsg","激活成功");
-        return "redirect:/user/toUserIndex1";
+        return "redirect:/user/cardmanage";
 
     }
+
+    @PostMapping("/addtimescard")
+    public String addCards(String name, HttpSession session, int totalTimes,Model m) {
+        Integer userid = (int)session.getAttribute("userid");
+        Admin adminById = as.findAdminById(userid);
+        Coupon coupon = new Coupon();
+        coupon.setStatus(Coupon.Status.UNACTIVATION);
+        coupon.setSpecies(Coupon.Species.TimesCard);
+        coupon.setAdmin(adminById);
+        coupon.setCouponName(name);
+        coupon.setNumber(Integer.parseInt(String.valueOf(snowFlake.getNextId()).substring(10,18)) );
+        TimesCard t = new TimesCard();
+        t.setCoupon(coupon);
+        t.setTotalTimes(totalTimes);
+        t.setRemainingTimes(totalTimes);
+        ts.saveTimesCard(t);
+
+        return "redirect:/user/adminIndex";
+    }
+    @PostMapping("/addrechargecard")
+    public String addCards(String name,HttpSession session,Double totalAmount,Model m) {
+        Integer userid = (int)session.getAttribute("userid");
+        Admin adminById = as.findAdminById(userid);
+        Coupon coupon = new Coupon();
+        coupon.setStatus(Coupon.Status.UNACTIVATION);
+        coupon.setSpecies(Coupon.Species.RechargeCard);
+        coupon.setAdmin(adminById);
+        coupon.setCouponName(name);
+        coupon.setNumber(Integer.parseInt(String.valueOf(snowFlake.getNextId()).substring(10,18)));
+        RechargeCard r = new RechargeCard();
+        r.setCoupon(coupon);
+        r.setTotalAmount(totalAmount);
+        r.setBalance(totalAmount);
+        rs.saveRechargeCard(r);
+
+        return "redirect:/user/adminIndex";
+    }
+    @GetMapping("/buyCard")
+    public String BuyCard(@RequestParam("number") int number , HttpSession session) {
+        Coupon couponByNumber = cs.findCouponByNumber(number);
+        Integer userid = (int)session.getAttribute("userid");
+        MemberShip memberShipById = ms.findMemberShipById(userid);
+        couponByNumber.setMemberShip(memberShipById);
+        return "redirect:/user/cardmanage";
+    }
+
 }

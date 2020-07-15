@@ -271,6 +271,78 @@
                       </div>
                   </div>
               </div>
+
+              <div class="col-lg-6">
+                  <div class="card">
+                      <div class="card-header">
+                          <h4>UnHolderTimesCard List</h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table">
+                                  <thead>
+                                  <tr>
+                                      <th>Species</th>
+                                      <th>Number</th>
+                                      <th>InsertTime</th>
+                                      <th>Status</th>
+                                      <th>total_times</th>
+                                      <th>remaining_times</th>
+                                      <th>Option</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr th:each="UnHolderTCard : ${UnHolderTCards}">
+                                      <!--                          <th scope="row"></th>-->
+                                      <td th:text="${UnHolderTCard.getCoupon().getSpecies()}"></td>
+                                      <td th:text="${UnHolderTCard.getCoupon().getNumber()}"></td>
+                                      <td th:text="${UnHolderTCard.getCoupon().getInsertTime()}"></td>
+                                      <td th:text="${UnHolderTCard.getCoupon().getStatus()}"></td>
+                                      <td th:text="${UnHolderTCard.getTotalTimes()}"></td>
+                                      <td th:text="${UnHolderTCard.getRemainingTimes()}"></td>
+                                      <td><a th:href="@{/user/buyCard(number=${UnHolderTCard.getCoupon().getNumber() })}">Get</a></td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-lg-6">
+                  <div class="card">
+                      <div class="card-header">
+                          <h4>UnHolderRechargeCard List</h4>
+                      </div>
+                      <div class="card-body">
+                          <div class="table-responsive">
+                              <table class="table table-striped">
+                                  <thead>
+                                  <tr >
+                                      <th>Species</th>
+                                      <th>Number</th>
+                                      <th>InsertTime</th>
+                                      <th>Status</th>
+                                      <th>total_amount</th>
+                                      <th>balance</th>
+                                      <th>Option</th>
+                                  </tr>
+                                  </thead>
+                                  <tbody>
+                                  <tr th:each="UnHolderRCard : ${UnHolderRCards}">
+                                      <th scope="row" th:text="${UnHolderRCard.getCoupon().getSpecies()}"></th>
+                                      <td th:text="${UnHolderRCard.getCoupon().getNumber()}"></td>
+                                      <td th:text="${UnHolderRCard.getCoupon().getInsertTime()}"></td>
+                                      <td th:text="${UnHolderRCard.getCoupon().getStatus()}"></td>
+                                      <td th:text="${UnHolderRCard.getTotalAmount()}"></td>
+                                      <td th:text="${UnHolderRCard.getBalance()}"></td>
+                                      <td><a th:href="@{/user/buyCard(number=${UnHolderRCard.getCoupon().getNumber() })}">Get</a></td>
+                                  </tr>
+                                  </tbody>
+                              </table>
+                          </div>
+                      </div>
+                  </div>
+              </div>
            <!-- <div class="col-lg-6">
               <div class="card">
                 <div class="card-header">

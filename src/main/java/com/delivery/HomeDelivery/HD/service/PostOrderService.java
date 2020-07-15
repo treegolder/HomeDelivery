@@ -1,8 +1,10 @@
 package com.delivery.HomeDelivery.HD.service;
 
-import com.delivery.HomeDelivery.HD.entity.Commodity;
-import com.delivery.HomeDelivery.HD.entity.PostOrder;
+import com.delivery.HomeDelivery.HD.component.SnowFlake;
+import com.delivery.HomeDelivery.HD.component.Util;
+import com.delivery.HomeDelivery.HD.entity.*;
 import com.delivery.HomeDelivery.HD.repository.CommodityRepository;
+import com.delivery.HomeDelivery.HD.repository.CouponRepository;
 import com.delivery.HomeDelivery.HD.repository.PostOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -16,8 +18,15 @@ public class PostOrderService {
   @Autowired
   private PostOrderRepository pr;
   @Autowired
-  private CommodityRepository cr;
-
+  private CommodityRepository commodityRepositoryr;
+  @Autowired
+  private CouponRepository cr;
+  @Autowired
+  private SnowFlake sf;
+  @Autowired
+  private Util util;
+  @Autowired
+  private  TimesCardService ts;
   public PostOrder savePostorder(PostOrder postOrder) {
     return pr.save(postOrder);
   }
@@ -44,10 +53,47 @@ public class PostOrderService {
     return pr.findPostOrderByNumber(number);
   }
   public Commodity findCommodityById(int id) {
-    return cr.findById(id).get();
+    return commodityRepositoryr.findById(id).get();
   }
+  @Scheduled(fixedDelay = 5000)
   public void dingshi() {
+    while (util.getI() == 0) {
+
+    }
     PostOrder postOrder = pr.findFirstByOrderByIdDesc();
+    Integer id = postOrder.getCoupon().getId();
+    Coupon coupon = cr.findById(id).get();
+    Commodity commodity = postOrder.getCommodity();
+    String province = postOrder.getProvince();
+    String tel = postOrder.getTel();
+    String city = postOrder.getCity();
+    String address = postOrder.getAddress();
+    String country = postOrder.getCountry();
+    String name = postOrder.getName();
+    MemberShip memberShip = postOrder.getMemberShip();
+    PostOrder postOrder1 = new PostOrder();
+    postOrder1.setCommodity(commodity);
+    postOrder1.setCount(0);
+    postOrder1.setStatus(PostOrder.Status.PROCESSING);
+    postOrder1.setNumber(String.valueOf(sf.getNextId()));
+    postOrder1.setProvince(province);
+    postOrder1.setTel(tel);
+    postOrder1.setCountry(country);
+    postOrder1.setCity(city);
+    postOrder1.setAddress(address);
+    postOrder1.setMemberShip(memberShip);
+    postOrder1.setName(name);
+    TimesCard timesCardById = ts.findTimesCardById(coupon.getId());
+    timesCardById.setRemainingTimes(timesCardById.getRemainingTimes() - 1);
+    ts.updateTimesCard(timesCardById);
+    postOrder1.setCoupon(coupon);
+
+    savePostorder(postOrder1);
+    if (timesCardById.getRemainingTimes() == 0){
+      util.setI(0);
+    }
+
+
 
   }
 }

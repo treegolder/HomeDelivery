@@ -1,4 +1,3 @@
-/*
 package com.delivery.HomeDelivery.HD.component;
 
 import com.delivery.HomeDelivery.HD.entity.*;
@@ -108,4 +107,3 @@ public class InitComponent implements InitializingBean {
 
     }
 }
-*/

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
+import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 @EnableJpaRepositories(repositoryBaseClass = BaseRepositoryImpl.class)
@@ -24,6 +25,7 @@ public class HomeDeliveryApplication {
 	public PasswordEncoder getPasswordEncoder(){
 		return new BCryptPasswordEncoder();
 	}
+
 
 	/*@Bean
 	public HttpFirewall allowUrlSemicolonHttpFirewall() {

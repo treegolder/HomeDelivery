@@ -19,4 +19,10 @@ public class CouponService {
     public List<Coupon> findAll() {
         return cr.findAll();
     }
+    public List<Coupon> findAcCards() {
+        return cr.findAcCards();
+    }
+    public List<Coupon> findUnHolderCards() {
+        return cr.findCouponByMemberShipIsNull();
+    }
 }

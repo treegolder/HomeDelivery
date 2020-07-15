@@ -47,6 +47,7 @@
           <h5 class="sidenav-heading">Main</h5>
           <ul id="side-main-menu" class="side-menu list-unstyled">
             <li class="active"><a th:href="@{/user/adminIndex}"> <i class="icon-grid"></i>Tables</a></li>
+              <li><a th:href="@{/user/toAdd}"> <i class="icon-form"></i>Forms</a></li>
           </ul>
         </div>
         <div class="admin-menu">
@@ -166,7 +167,7 @@
             <div class="col-lg-6">
               <div class="card">
                 <div class="card-header">
-                  <h4>Coupon List</h4>
+                  <h4>ActiveCoupon List</h4>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -184,7 +185,8 @@
                           <th scope="row" th:text="${coupon.getId()}"></th>
                           <td th:text="${coupon.getSpecies()}"></td>
                           <td th:text="${coupon.getStatus()}"></td>
-                          <td th:text="${coupon.getMemberShip().getUser().getName()}"></td>
+<!--                          <td th:text="${coupon.getMemberShip().getUser().getName()}"></td>-->
+                            <td th:text="${coupon.getMemberShip().getUser().getName()}"></td>
                         </tr>
                       </tbody>
                     </table>
