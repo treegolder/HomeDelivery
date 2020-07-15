@@ -43,6 +43,7 @@ public class UserController {
         m.addAttribute("cardsList",coupons);
         m.addAttribute("name", name);
         m.addAttribute("price",price);
+        m.addAttribute("commodityid",id);
         session.setAttribute("commodityid", id);
         session.setAttribute("price", price);
         session.setAttribute("name", name);
@@ -51,7 +52,7 @@ public class UserController {
 
     @PostMapping("/pay")
     public String pay (HttpSession session, String name, String tel,  String country, String province, String city,
-                          Integer cardNumber, String address,Model m,int id) {
+                          Integer cardNumber, String address,Model m,String id) {
         Integer userid = (int)session.getAttribute("userid");
         MemberShip memberShip = ms.findMemberShipById(userid);
         PostOrder postOrder = new PostOrder();
@@ -66,8 +67,9 @@ public class UserController {
         postOrder.setNumber(String.valueOf(snowFlake.getNextId()));
         postOrder.setStatus(PostOrder.Status.PROCESSING);
         postOrder.setMemberShip(memberShip);
-        Commodity commodity = ps.findCommodityById(id);
-        ps.savePostorder(postOrder);
+        Commodity commodity = ps.findCommodityById(Integer.valueOf(id));
+        postOrder.setCommodity(commodity);
+
         List<Coupon> coupons = memberShip.getCoupons();
         if (String.valueOf(coupon.getSpecies()).equals("RechargeCard")) {
             for (int i = 0; i < coupons.size(); i ++) {
@@ -105,16 +107,18 @@ public class UserController {
                         memberCoupon.setRemainingTimes(memberCoupon.getRemainingTimes() - 1);
                         ts.updateTimesCard(memberCoupon);
                         m.addAttribute("tmsg1", "购买成功");
-                        break;
-                    } else {
-                        //逻辑删除
-                        ts.logicDelete(memberCoupon);
-                        m.addAttribute("tmsg2", "该卡片可用次数已耗尽，已自动删除");
+                        if (memberCoupon.getRemainingTimes() == 0) {
+                            //逻辑删除
+                            ts.logicDelete(memberCoupon);
+                            m.addAttribute("tmsg2", "该卡片可用次数已耗尽，已自动删除");
+                            break;
+                        }
                         break;
                     }
                 }
             }
         }
+        ps.savePostorder(postOrder);
         return "redirect:/user/toUserIndex1";
     }
     @GetMapping("/cardmanage")

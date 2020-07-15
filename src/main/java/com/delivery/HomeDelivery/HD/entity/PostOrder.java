@@ -46,6 +46,8 @@ public class PostOrder {
     private Status status;
     @OneToOne
     private Coupon coupon;
+    @OneToOne
+    private Commodity commodity;
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)
