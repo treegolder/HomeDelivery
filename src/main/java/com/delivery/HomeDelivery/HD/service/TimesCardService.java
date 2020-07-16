@@ -2,6 +2,7 @@ package com.delivery.HomeDelivery.HD.service;
 
 import com.delivery.HomeDelivery.HD.entity.Coupon;
 import com.delivery.HomeDelivery.HD.entity.TimesCard;
+import com.delivery.HomeDelivery.HD.repository.CouponRepository;
 import com.delivery.HomeDelivery.HD.repository.TimesCardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import java.util.List;
 public class TimesCardService {
     @Autowired
     private TimesCardRepository tr;
+    @Autowired
+    private CouponRepository cr;
 
     public TimesCard saveTimesCard(TimesCard timesCard) {
         return tr.save(timesCard);
@@ -40,8 +43,11 @@ public class TimesCardService {
         return tr.findDelTimesCardById(id);
     }
     public void logicDelete(TimesCard timesCard) {
-        if (timesCard.getRemainingTimes() == 0)
+        if (timesCard.getRemainingTimes() <= 0)
             timesCard.getCoupon().setStatus(Coupon.Status.DELETED);
+        updateTimesCard(timesCard);
+        cr.save(timesCard.getCoupon());
+
     }
     public List<TimesCard> findAll() {
         return tr.findAll();

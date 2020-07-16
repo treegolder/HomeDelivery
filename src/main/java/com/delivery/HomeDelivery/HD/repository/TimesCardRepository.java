@@ -1,5 +1,6 @@
 package com.delivery.HomeDelivery.HD.repository;
 
+import com.delivery.HomeDelivery.HD.entity.Coupon;
 import com.delivery.HomeDelivery.HD.entity.TimesCard;
 import org.hibernate.sql.Select;
 import org.springframework.data.jpa.repository.Query;
@@ -24,4 +25,8 @@ public interface TimesCardRepository extends BaseRepository<TimesCard,Integer>{
     List<TimesCard> findAcCards();
     @Query("from TimesCard t where t.coupon.status='DELETED'")
     List<TimesCard> findDelCards();
+
+    void deleteByCoupon(Coupon coupon);
+
+    TimesCard findByCoupon(Coupon coupon);
 }

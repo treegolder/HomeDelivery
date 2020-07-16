@@ -56,7 +56,7 @@ public class PostOrderService {
   public Commodity findCommodityById(int id) {
     return commodityRepositoryr.findById(id).get();
   }
-  @Scheduled(fixedDelay = 5000)
+  @Scheduled(initialDelay=5000,fixedDelay = 5000)
   public void ScheduledDelivery() {
     while (util.getI() == 0) {
 
@@ -84,19 +84,33 @@ public class PostOrderService {
     postOrder1.setCountry(country);
     postOrder1.setCity(city);
     postOrder1.setAddress(address);
-    postOrder1.setMemberShip(memberShip);
+    postOrder1.setMemberShip(memberShip); 
     postOrder1.setName(name);
     TimesCard timesCardById = ts.findTimesCardById(coupon.getId());
     timesCardById.setRemainingTimes(timesCardById.getRemainingTimes() - 1);
+    ts.updateTimesCard(timesCardById);
+    if (timesCardById.getRemainingTimes() <= 0){
+      ts.logicDelete(timesCardById);
+      util.setI(0);
+    }
 
     ts.updateTimesCard(timesCardById);
+
     postOrder1.setCoupon(coupon);
 
     savePostorder(postOrder1);
-    if (timesCardById.getRemainingTimes() <= 0){
-      util.setI(0);
-      ts.logicDelete(timesCardById);
+    while (util.getI() == 0) {
+      if (!timesCardById.getCoupon().getStatus().equals(Coupon.Status.DELETED)) {
+        if (timesCardById.getRemainingTimes() <= 0)
+          ts.logicDelete(timesCardById);
+      }
+
     }
+   /* if (timesCardById.getRemainingTimes() <= 0){
+      ts.logicDelete(timesCardById);
+      util.setI(0);
+
+    }*/
 
 
 

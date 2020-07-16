@@ -116,18 +116,21 @@ public class UserController {
                         m.addAttribute("tmsg1", "购买成功");
                         String s = ps.savePostorder(postOrder);
                         util.setNumber(s);
-                        util.setI(1);
+
                         if (memberCoupon.getRemainingTimes() <= 0) {
                             //逻辑删除
                             ts.logicDelete(memberCoupon);
                             m.addAttribute("tmsg2", "该卡片可用次数已耗尽，已自动删除");
                             break;
                         }
+                        util.setI(1);
                         break;
                     }
                 }
             }
+
         }
+
         //ps.savePostorder(postOrder);
 
         return "redirect:/user/toUserIndex1";
@@ -143,8 +146,19 @@ public class UserController {
         List<RechargeCard> rechargeCardList = new ArrayList<>();
         List<TimesCard> tsUnAcCards = new ArrayList<>();
         List<RechargeCard> rsUnAcCards = new ArrayList<>();
+        for (Coupon c : coupons) {
+            if (c.getSpecies().equals(Coupon.Species.TimesCard) && !c.getStatus().equals(Coupon.Status.DELETED)) {
+                TimesCard acTimesCardById = ts.findAcTimesCardById(c.getId());
+                if (acTimesCardById != null) {
+                    if (acTimesCardById.getRemainingTimes() <= 0) {
+                        ts.logicDelete(acTimesCardById);
+                    }
+                }
 
+            }
+        }
         for(Coupon c : coupons) {
+
             if (c.getSpecies().equals(Coupon.Species.TimesCard)
                && c.getStatus().equals(Coupon.Status.ACTIVATION)) {
                 TimesCard acTimesCardById = ts.findAcTimesCardById(c.getId());

@@ -21,7 +21,7 @@ public class MemberShip {
     Admin admin;
     @OneToMany(mappedBy = "memberShip")
     private List<Coupon> coupons;
-    @OneToMany(mappedBy = "memberShip")
+    @OneToMany(mappedBy = "memberShip",cascade = CascadeType.REMOVE)
     private List<PostOrder> postOrders;
 
 }
