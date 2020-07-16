@@ -1,6 +1,7 @@
 package com.delivery.HomeDelivery.HD.component;
 
 import com.delivery.HomeDelivery.HD.entity.*;
+import com.delivery.HomeDelivery.HD.repository.CommodityRepository;
 import com.delivery.HomeDelivery.HD.repository.CouponRepository;
 import com.delivery.HomeDelivery.HD.service.*;
 import org.springframework.beans.factory.InitializingBean;
@@ -26,7 +27,8 @@ public class InitComponent implements InitializingBean {
     private RechargeCardService rs;
     @Autowired
     private PasswordEncoder encoder;
-
+    @Autowired
+    private CommodityRepository commodityRepository;
     @Override
     public void afterPropertiesSet() throws Exception {
         int number = 1001;
@@ -102,6 +104,42 @@ public class InitComponent implements InitializingBean {
             rechargeCard.setTotalAmount(1000);
             rechargeCard.setBalance(1000);
             rs.saveRechargeCard(rechargeCard);
+        }
+        int id = 1;
+        Commodity c = commodityRepository.findById(id).orElse(null);
+        if (c == null) {
+            Commodity commodity = new Commodity();
+            commodity.setId(id);
+            commodity.setName("apple");
+            commodity.setPrice(10);
+            commodityRepository.save(commodity);
+        }
+        int id2 = 2;
+        Commodity c2 = commodityRepository.findById(id2).orElse(null);
+        if (c2 == null) {
+            Commodity commodity = new Commodity();
+            commodity.setId(id2);
+            commodity.setName("orange");
+            commodity.setPrice(15);
+            commodityRepository.save(commodity);
+        }
+        int id3 = 3;
+        Commodity c3 = commodityRepository.findById(id3).orElse(null);
+        if (c3 == null) {
+            Commodity commodity = new Commodity();
+            commodity.setId(id3);
+            commodity.setName("banana");
+            commodity.setPrice(20);
+            commodityRepository.save(commodity);
+        }
+        int id4 = 4;
+        Commodity c4 = commodityRepository.findById(id4).orElse(null);
+        if (c4 == null) {
+            Commodity commodity = new Commodity();
+            commodity.setId(id4);
+            commodity.setName("tomato");
+            commodity.setPrice(30);
+            commodityRepository.save(commodity);
         }
 
 
