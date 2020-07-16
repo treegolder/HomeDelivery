@@ -88,7 +88,8 @@ public class UserController {
                         memberCoupon.setBalance(price);
                         rs.updateRechargeCard(memberCoupon);
                         m.addAttribute("rmsg1","购买成功");
-                        if (memberCoupon.getBalance() == 0.0) {
+                        ps.savePostorder(postOrder);
+                        if (memberCoupon.getBalance() <= 0.0) {
                             //逻辑删除
                             rs.logicDelete(memberCoupon);
                             m.addAttribute("rmsg2","卡片余额为0，已自动删除");
@@ -113,8 +114,10 @@ public class UserController {
                         memberCoupon.setRemainingTimes(memberCoupon.getRemainingTimes() - 1);
                         ts.updateTimesCard(memberCoupon);
                         m.addAttribute("tmsg1", "购买成功");
+                        String s = ps.savePostorder(postOrder);
+                        util.setNumber(s);
                         util.setI(1);
-                        if (memberCoupon.getRemainingTimes() == 0) {
+                        if (memberCoupon.getRemainingTimes() <= 0) {
                             //逻辑删除
                             ts.logicDelete(memberCoupon);
                             m.addAttribute("tmsg2", "该卡片可用次数已耗尽，已自动删除");
@@ -125,7 +128,7 @@ public class UserController {
                 }
             }
         }
-        ps.savePostorder(postOrder);
+        //ps.savePostorder(postOrder);
 
         return "redirect:/user/toUserIndex1";
     }

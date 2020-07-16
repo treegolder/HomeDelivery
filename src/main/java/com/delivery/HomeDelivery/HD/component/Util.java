@@ -8,4 +8,5 @@ import org.springframework.stereotype.Component;
 @Getter@Setter
 public class Util {
     private int i = 0;
+    private String number = null;
 }

@@ -27,8 +27,9 @@ public class PostOrderService {
   private Util util;
   @Autowired
   private  TimesCardService ts;
-  public PostOrder savePostorder(PostOrder postOrder) {
-    return pr.save(postOrder);
+  public String savePostorder(PostOrder postOrder) {
+    String number = pr.save(postOrder).getNumber();
+    return number;
   }
 
   public void deletePostOrder(PostOrder postOrder) {
@@ -45,8 +46,8 @@ public class PostOrderService {
     return pr.findById(id).get();
   }
 
-  public PostOrder updatePostOrder(PostOrder postOrder) {
-    return savePostorder(postOrder);
+  public void updatePostOrder(PostOrder postOrder) {
+    savePostorder(postOrder);
   }
 
   public PostOrder findPostOrderByNumber(String number) {
@@ -56,11 +57,13 @@ public class PostOrderService {
     return commodityRepositoryr.findById(id).get();
   }
   @Scheduled(fixedDelay = 5000)
-  public void dingshi() {
+  public void ScheduledDelivery() {
     while (util.getI() == 0) {
 
     }
-    PostOrder postOrder = pr.findFirstByOrderByIdDesc();
+
+    //PostOrder postOrder = pr.findFirstByOrderByIdDesc();
+    PostOrder postOrder = pr.findPostOrderByNumber(util.getNumber());
     Integer id = postOrder.getCoupon().getId();
     Coupon coupon = cr.findById(id).get();
     Commodity commodity = postOrder.getCommodity();
@@ -85,12 +88,14 @@ public class PostOrderService {
     postOrder1.setName(name);
     TimesCard timesCardById = ts.findTimesCardById(coupon.getId());
     timesCardById.setRemainingTimes(timesCardById.getRemainingTimes() - 1);
+
     ts.updateTimesCard(timesCardById);
     postOrder1.setCoupon(coupon);
 
     savePostorder(postOrder1);
-    if (timesCardById.getRemainingTimes() == 0){
+    if (timesCardById.getRemainingTimes() <= 0){
       util.setI(0);
+      ts.logicDelete(timesCardById);
     }
 
 

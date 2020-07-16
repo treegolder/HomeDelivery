@@ -50,16 +50,10 @@ public class RouterController {
         Optional.ofNullable(us.findUserByNumber(number))
             .filter(u -> encoder.matches(password, u.getPassword()))
             .orElse(null);
-    //                .orElseThrow(() -> new
-    // ResponseStatusException(HttpStatus.UNAUTHORIZED,"用户名或密码错误"));
     if (user == null) {
       m.addAttribute("msg", "用户名或密码错误");
     } else {
       session.setAttribute("userid", user.getId());
-
-      /*  Integer userid = (int)session.getAttribute("userid");
-      List<Coupon> coupons =ms.findAcCouponsByMemberId(userid);
-      m.addAttribute("cardsList",coupons);*/
       if (String.valueOf(user.getRole()).equals("ADMIN")) {
         List<MemberShip> allMember = ms.findAll();
         List<Coupon> allCoupon = cs.findAcCards();
@@ -67,7 +61,6 @@ public class RouterController {
         m.addAttribute("allCoupon", allCoupon);
         return "adminIndex";
       }
-
       if (String.valueOf(user.getRole()).equals("MEMBER")) {
         List<Commodity> commodityList = us.commodities();
         m.addAttribute("commodities", commodityList);
