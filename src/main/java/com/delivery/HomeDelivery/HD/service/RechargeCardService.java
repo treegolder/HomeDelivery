@@ -43,6 +43,7 @@ public class RechargeCardService {
     public void logicDelete(RechargeCard rechargeCard) {
         if (rechargeCard.getBalance() == 0)
             rechargeCard.getCoupon().setStatus(Coupon.Status.DELETED);
+
     }
     public List<RechargeCard> findAll() {
         return rr.findAll();

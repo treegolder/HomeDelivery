@@ -58,9 +58,8 @@ public class PostOrderService {
   }
   @Scheduled(initialDelay=5000,fixedDelay = 5000)
   public void ScheduledDelivery() {
-    while (util.getI() == 0) {
 
-    }
+    while (util.getI() == 0) { }
 
     //PostOrder postOrder = pr.findFirstByOrderByIdDesc();
     PostOrder postOrder = pr.findPostOrderByNumber(util.getNumber());

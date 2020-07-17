@@ -42,6 +42,7 @@ public class UserController {
     private AdminService as;
 
 
+
     @PostMapping("/toBuy")
     public String toBuy(int id ,String name,Double price,HttpSession session, Model m) {
         Integer userid = (int)session.getAttribute("userid");
