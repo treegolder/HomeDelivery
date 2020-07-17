@@ -259,4 +259,12 @@ public class UserController {
         return "redirect:/user/cardmanage";
     }
 
+    @PostMapping("/addCommodity")
+    public String addCommodity(String name, Double price) {
+        Commodity commodity = new Commodity();
+        commodity.setName(name);
+        commodity.setPrice(price);
+        as.saveCommodoty(commodity);
+        return "redirect:/user/adminIndex";
+    }
 }

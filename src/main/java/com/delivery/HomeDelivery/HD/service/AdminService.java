@@ -1,6 +1,7 @@
 package com.delivery.HomeDelivery.HD.service;
 
 import com.delivery.HomeDelivery.HD.entity.Admin;
+import com.delivery.HomeDelivery.HD.entity.Commodity;
 import com.delivery.HomeDelivery.HD.repository.AdminRepository;
 import com.delivery.HomeDelivery.HD.repository.CommodityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class AdminService {
        // return ar.save(admin);
         return saveAdmin(admin);
     }
-
-
+    public Commodity saveCommodoty(Commodity c) {
+        return cr.save(c);
+    }
 }
