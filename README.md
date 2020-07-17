@@ -1,4 +1,4 @@
-###电商宅配送会员系统
+### 电商宅配送会员系统
 #### Springboot + Spring-data-JPA + Spring Task + thymeleaf + MySQL 
 #### 系统分为管理员、会员两种角色，管理员添加卡卷，会员使用卡卷购买配送服务，自动配送
 #### 系统包含套餐卡（TimesCard）与充值卡（RechargeCard）两种卡卷，所有卡卷包含未激活（UNACTIVATION）、激活（ACTIVATION）、已失效(DELETED)三种状态
